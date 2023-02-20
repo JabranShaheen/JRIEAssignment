@@ -11,8 +11,10 @@ namespace JRIEAssignment.Services
 {
     public static class ServicesRegistery
     {
-        public static IUserProfileManager userProfileManager;
-        public static IEntityRepository<LocalSystem> localSystemRepository =  new LocalSystemRepository();
-
+        public static IUserProfileManager UserProfileManager;
+        public static IEntityRepository<LocalSystem> LocalSystemRepository =  new LocalSystemRepository();
+        public static IEntityRepository<Branch> BranchRepository = new BranchRepository();
+        public static IEntityRepository<UserLevelCategory> UserLevelCategoryRepository = new UserLevelCategoryRepository();
+        
     }
 }

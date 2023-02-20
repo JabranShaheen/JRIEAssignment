@@ -17,7 +17,7 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<LocalSystemBranch> GetAll(LocalSystemBranch EntityData)
+        public IEnumerable<LocalSystemBranch> GetAll()
         {
             throw new NotImplementedException();
         }

@@ -18,7 +18,7 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<UserAccess> GetAll(UserAccess EntityData)
+        public IEnumerable<UserAccess> GetAll()
         {
             throw new NotImplementedException();
         }

@@ -57,6 +57,7 @@
     <Compile Include="Repository\BranchRepository.cs" />
     <Compile Include="Repository\LocalSystemBranchRepository.cs" />
     <Compile Include="Repository\LocalSystemRepository.cs" />
+    <Compile Include="Repository\SQLDataProvider\SQLDataProvider.cs" />
     <Compile Include="Repository\UserAccessRepository.cs" />
     <Compile Include="Repository\UserLevelCategoryRepository.cs" />
     <Compile Include="Repository\UserProfileRepository.cs" />
@@ -91,8 +92,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repository\SQLConfig\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
