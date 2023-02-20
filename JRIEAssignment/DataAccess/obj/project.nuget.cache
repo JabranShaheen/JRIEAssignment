@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "GvNw6NTOwKWv1woG/C91m+qYY/7Qj4qu5JSve8fY8tY4ZBb+BjTctZSxqBnMvL0LQmvuz4sQSVUOWn4u625Y4g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\DataAccess\\RepositoryAbstraction.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Jabra\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Jabra\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
