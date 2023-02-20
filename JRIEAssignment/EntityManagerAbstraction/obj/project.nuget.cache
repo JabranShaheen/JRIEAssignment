@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "/F5aH9u4z8NumCHgdjX7hDXCTbC2mmCxjOz2W8GL6WTLgynR8ZVCZ90gBkCt7Sr9DUsWSLDCHeY1zBGcQWaNFA==",
+  "dgSpecHash": "L6Nvf8T2fSqQPIbYoJa1uFop8MkwyclVtKCaCfS/3/KyePQsctkSGlJYUZ93mFMfkfjbNn0VONz6u3JGzUR0Tw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\EntityManagerAbstraction\\EntityManagerAbstraction.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jabra\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Jabra\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
-    "C:\\Users\\Jabra\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\Jabra\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\Jabra\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\Jabra\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",
     "C:\\Users\\Jabra\\.nuget\\packages\\system.diagnostics.tools\\4.3.0\\system.diagnostics.tools.4.3.0.nupkg.sha512",

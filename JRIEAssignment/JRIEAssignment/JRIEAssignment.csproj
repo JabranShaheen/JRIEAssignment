@@ -43,6 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntitiesAbstraction\Entities\Branch.cs" />
+    <Compile Include="EntitiesAbstraction\Entities\LocalSystem.cs" />
+    <Compile Include="EntitiesAbstraction\Entities\LocalSystemBranch.cs" />
+    <Compile Include="EntitiesAbstraction\Entities\UserAccess.cs" />
+    <Compile Include="EntitiesAbstraction\Entities\UserLevelCategory.cs" />
+    <Compile Include="EntitiesAbstraction\Entities\UserProfile.cs" />
+    <Compile Include="EntitiesAbstraction\IEntity.cs" />
+    <Compile Include="EntityManagerAbstraction\IEntityManager.cs" />
+    <Compile Include="EntityManagerAbstraction\IUserProfileManager.cs" />
+    <Compile Include="EntityManager\UserProfileManager.cs" />
+    <Compile Include="RepositoryAbstraction\IEntityRepository.cs" />
+    <Compile Include="Repository\BranchRepository.cs" />
+    <Compile Include="Repository\LocalSystemBranchRepository.cs" />
+    <Compile Include="Repository\LocalSystemRepository.cs" />
+    <Compile Include="Repository\UserAccessRepository.cs" />
+    <Compile Include="Repository\UserLevelCategoryRepository.cs" />
+    <Compile Include="Repository\UserProfileRepository.cs" />
     <Compile Include="Services\ServicesRegistery.cs" />
     <Compile Include="UserProfile.cs">
       <SubType>Form</SubType>
@@ -73,12 +90,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EntityManagerAbstraction\EntityManagerAbstraction.csproj">
-      <Project>{E292330D-0E88-454D-9119-FAF955895026}</Project>
-      <Name>EntityManagerAbstraction</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
