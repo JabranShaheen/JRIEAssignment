@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "afF5DojZ3nv7CR/8Fcj5MFMuGbn/8livxLVDZsrniwMb7HwwcEMmXpfGA4d6G+lf126xszoqiWyKnUjPzxihuQ==",
+  "dgSpecHash": "EENHJalxudzAK+SNi9bcWxTeEgbalF4dIShRGtn+QmHbDzWZ0Fk12rzL6CNcq8232bazLReOeum7GsY2M+0mNQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj",
+  "projectFilePath": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jabra\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Jabra\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"

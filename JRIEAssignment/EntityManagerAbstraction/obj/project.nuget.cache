@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q5soxWV3qWQIC1a9oHmHuhqCijJuzt1iC7OW87ZSC7umkNryOJBpDg4zd2pDZAndCe8wEAKEcJoQeVf/nzv0JA==",
+  "dgSpecHash": "FJDPcpeZH/gKO9hGtRhnTeNBMy9TJj1ZGjB5fVEVO5Qw1DZnkb/38uUWlvDqyiNip6dmXCuId7YwcL8PFSvCRw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\EntityManagerAbstraction\\EntityManagerAbstraction.csproj",
+  "projectFilePath": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\EntityManagerAbstraction\\EntityManagerAbstraction.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jabra\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Jabra\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"

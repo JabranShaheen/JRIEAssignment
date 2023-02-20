@@ -1,16 +1,13 @@
 ﻿using EntitiesAbstraction;
+using EntitiesAbstraction.Entities;
 using System;
 using System.Collections.Generic;
 
 namespace EntityManagerAbstraction
 {
-    public interface IUserProfileManager<T> where T : IEntity
+    public interface IUserProfileManager : IEntityManager<UserProfile> 
     {
-        T GetNewUser(int id);
-        IEnumerable<T> GetAll(T EntityData);
-        T Get(int id);
-        void Insert(T EntityData);
-        void Delete(T EntityData);
-        void Update(T EntityData);
+        UserProfile GetNewUser(int id);
+
     }
 }

@@ -7,5 +7,6 @@ namespace JRIEAssignment.Services
 {
     public static class ServicesRegistery
     {
+        public static 
     }
 }

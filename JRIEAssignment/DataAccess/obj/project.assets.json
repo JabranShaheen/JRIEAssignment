@@ -202,11 +202,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\DataAccess\\RepositoryAbstraction.csproj",
+      "projectUniqueName": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\DataAccess\\RepositoryAbstraction.csproj",
       "projectName": "RepositoryAbstraction",
-      "projectPath": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\DataAccess\\RepositoryAbstraction.csproj",
+      "projectPath": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\DataAccess\\RepositoryAbstraction.csproj",
       "packagesPath": "C:\\Users\\Jabra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\DataAccess\\obj\\",
+      "outputPath": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -228,8 +228,8 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj": {
-              "projectPath": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj"
+            "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj": {
+              "projectPath": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj"
             }
           }
         }

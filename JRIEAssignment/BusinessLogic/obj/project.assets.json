@@ -186,11 +186,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj",
+      "projectUniqueName": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj",
       "projectName": "EntitiesAbstraction",
-      "projectPath": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj",
+      "projectPath": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\BusinessLogic\\EntitiesAbstraction.csproj",
       "packagesPath": "C:\\Users\\Jabra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jabra\\source\\repos\\JRIEAssignment\\BusinessLogic\\obj\\",
+      "outputPath": "C:\\Users\\Jabra\\Documents\\GitHub\\JRIEAssignment\\JRIEAssignment\\BusinessLogic\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
