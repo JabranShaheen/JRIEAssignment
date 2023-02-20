@@ -15,5 +15,10 @@ namespace JRIEAssignment
         {
             InitializeComponent();
         }
+
+        private void UserProfile_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
