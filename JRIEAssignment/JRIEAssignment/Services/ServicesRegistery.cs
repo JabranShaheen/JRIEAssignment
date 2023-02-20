@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EntityManagerAbstraction;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ namespace JRIEAssignment.Services
 {
     public static class ServicesRegistery
     {
-        public static 
+        public static IUserProfileManager userProfileManager;
+
     }
 }

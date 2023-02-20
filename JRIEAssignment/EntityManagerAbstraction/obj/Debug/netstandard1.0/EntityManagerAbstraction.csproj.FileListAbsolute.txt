@@ -1,0 +1,13 @@
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\bin\Debug\netstandard1.0\EntityManagerAbstraction.deps.json
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\bin\Debug\netstandard1.0\EntityManagerAbstraction.dll
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\bin\Debug\netstandard1.0\EntityManagerAbstraction.pdb
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\bin\Debug\netstandard1.0\EntitiesAbstraction.dll
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\bin\Debug\netstandard1.0\EntitiesAbstraction.pdb
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\obj\Debug\netstandard1.0\EntityManagerAbstraction.csproj.AssemblyReference.cache
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\obj\Debug\netstandard1.0\EntityManagerAbstraction.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\obj\Debug\netstandard1.0\EntityManagerAbstraction.AssemblyInfoInputs.cache
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\obj\Debug\netstandard1.0\EntityManagerAbstraction.AssemblyInfo.cs
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\obj\Debug\netstandard1.0\EntityManagerAbstraction.csproj.CoreCompileInputs.cache
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\obj\Debug\netstandard1.0\EntityManagerAbstraction.csproj.CopyComplete
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\obj\Debug\netstandard1.0\EntityManagerAbstraction.dll
+C:\Users\Jabra\Documents\GitHub\JRIEAssignment\JRIEAssignment\EntityManagerAbstraction\obj\Debug\netstandard1.0\EntityManagerAbstraction.pdb

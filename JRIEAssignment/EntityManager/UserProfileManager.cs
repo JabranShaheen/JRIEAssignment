@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace EntityManager
 {
-    public class UserProfileManager : IUserProfileManager<UserProfile>
+    public class UserProfileManager : IUserProfileManager
     {
         IEntityRepository<LocalSystemBranch> _localSystemBranchRepositoy;
         IEntityRepository<UserAccess> _userAccessRepositoy;

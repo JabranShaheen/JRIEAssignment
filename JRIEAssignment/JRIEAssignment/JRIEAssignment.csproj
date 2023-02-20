@@ -74,5 +74,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EntityManagerAbstraction\EntityManagerAbstraction.csproj">
+      <Project>{E292330D-0E88-454D-9119-FAF955895026}</Project>
+      <Name>EntityManagerAbstraction</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
