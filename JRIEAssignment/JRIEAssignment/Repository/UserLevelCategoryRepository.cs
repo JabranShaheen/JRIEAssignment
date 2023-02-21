@@ -10,7 +10,7 @@ namespace Repository
 {
     internal class UserLevelCategoryRepository :SQLDataProvider,  IEntityRepository<UserLevelCategory>
     {
-        public void Delete(UserLevelCategory EntityData)
+        public object Delete(UserLevelCategory EntityData)
         {
             throw new NotImplementedException();
         }
@@ -32,12 +32,12 @@ namespace Repository
             return UserLevelCategories;
         }
 
-        public void Insert(UserLevelCategory EntityData)
+        public object Insert(UserLevelCategory EntityData)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(UserLevelCategory EntityData)
+        public object Update(UserLevelCategory EntityData)
         {
             throw new NotImplementedException();
         }

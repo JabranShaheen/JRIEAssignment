@@ -17,16 +17,16 @@ namespace JRIEAssignment.Repository.SQLDataProvider
             {
                 using (SqlConnection connection = new SqlConnection(_connString))
                 {
-                    DataTable oTable = new DataTable("table");
+                    DataTable table = new DataTable("tbl");
             
                     SqlCommand cmd = new SqlCommand(aSqlQuery, connection);            
                     connection.Open();
-                    using (var sdr = cmd.ExecuteReader())
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        oTable.Load(sdr);
+                        table.Load(reader);
                     }
                     connection.Close();
-                    return oTable;
+                    return table;
                 }
             }
             catch (Exception e)
@@ -54,8 +54,5 @@ namespace JRIEAssignment.Repository.SQLDataProvider
                 return null;
             }
         }
-
-
-
     }
 }

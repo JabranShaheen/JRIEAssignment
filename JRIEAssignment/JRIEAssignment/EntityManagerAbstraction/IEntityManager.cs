@@ -9,8 +9,8 @@ namespace EntityManagerAbstraction
     {
         IEnumerable<T> GetAll();
         T Get(int id);
-        void Insert(T EntityData);
-        void Delete(T EntityData);
-        void Update(T EntityData);
+        object Insert(T EntityData);
+        object Delete(T EntityData);
+        object Update(T EntityData);
     }
 }

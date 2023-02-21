@@ -17,7 +17,7 @@ namespace EntityManager
             _userProfileRepositoy=userProfileRepositoy;
         }        
 
-        public void Delete(UserProfile EntityData)
+        public object Delete(UserProfile EntityData)
         {
             throw new NotImplementedException();
         }
@@ -44,14 +44,15 @@ namespace EntityManager
             return userProfile;
         }
 
-        public void Insert(UserProfile EntityData)
+        public object Insert(UserProfile EntityData)
+        {
+            return _userProfileRepositoy.Insert(EntityData);
+        }
+
+        public object Update(UserProfile EntityData)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(UserProfile EntityData)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

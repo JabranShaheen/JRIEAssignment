@@ -10,7 +10,7 @@ namespace Repository
 {
     internal class LocalSystemRepository : SQLDataProvider, IEntityRepository<LocalSystem> 
     {
-        public void Delete(LocalSystem EntityData)
+        public object Delete(LocalSystem EntityData)
         {
             throw new NotImplementedException();
         }
@@ -33,12 +33,12 @@ namespace Repository
             return localSystems;
         }
 
-        public void Insert(LocalSystem EntityData)
+        public object Insert(LocalSystem EntityData)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(LocalSystem EntityData)
+        public object Update(LocalSystem EntityData)
         {
             throw new NotImplementedException();
         }

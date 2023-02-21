@@ -9,7 +9,7 @@ namespace Repository
 {
     public class BranchRepository :SQLDataProvider, IEntityRepository<Branch>
     {
-        public void Delete(Branch EntityData)
+        public object Delete(Branch EntityData)
         {
             throw new NotImplementedException();
         }
@@ -31,12 +31,12 @@ namespace Repository
             return branches;
         }
 
-        public void Insert(Branch EntityData)
+        public object Insert(Branch EntityData)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Branch EntityData)
+        public object Update(Branch EntityData)
         {
             throw new NotImplementedException();
         }

@@ -64,7 +64,6 @@ namespace JRIEAssignment
                     table.Columns.Add(new DataColumn(column.BranchCode, typeof(bool)));
             }
 
-
             foreach (var row in localSystemRepostoryData)
             {
                 if (row.LocalSystemName != null)
@@ -78,16 +77,24 @@ namespace JRIEAssignment
 
             dataGridView1.DataSource = table;
 
+
+            DataGridViewComboBoxColumn comboBoxColumnID = new DataGridViewComboBoxColumn();
+            comboBoxColumnID.Name = "LevelCategoryID";
+            comboBoxColumnID.Visible = false;
+            dataGridView1.Columns.Add(comboBoxColumnID);
+
             DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
             comboBoxColumn.HeaderText = "Level Category";
             comboBoxColumn.Width = 200;
             comboBoxColumn.Name = "LevelCategory";
             dataGridView1.Columns.Add(comboBoxColumn);
 
+
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 var systemId = int.Parse((row.Cells[0].Value??-1).ToString());
 
+                DataGridViewComboBoxCell comboBoxCellId = (row.Cells[row.Cells.Count - 2] as DataGridViewComboBoxCell);
                 DataGridViewComboBoxCell comboBoxCell = (row.Cells[row.Cells.Count - 1] as DataGridViewComboBoxCell);
 
                 foreach (var userLevelCategory in userLevelCategoryRepositoryData.Where(x => x.UserLevelCategoryLocalSystemId == systemId))
@@ -95,20 +102,21 @@ namespace JRIEAssignment
                     if (userLevelCategory.UserLevelCategoryName == null)
                         userLevelCategory.UserLevelCategoryName = "";
                     
-                    comboBoxCell.Items.Add(userLevelCategory.UserLevelCategoryName);
+                    comboBoxCell.Items.Add(userLevelCategory.UserLevelCategoryName);                    
+                    comboBoxCellId.Items.Add(userLevelCategory.UserLevelCategoryId.ToString());
                 }
             }
 
             dataGridView1.Columns[0].Visible= false;
         }
 
-        private void LoadUserProfile(UserProfile userProfile)
+        private void LoadUserProfile()
         {
-            lblID.Text = userProfile.UserProfileId==-1?"": userProfile.UserProfileId.ToString();
-            txtEmail.Text = userProfile.UserProfileMailAddress;
-            txtDomain.Text = userProfile.UserProfileDomainName;
-            txtFullName.Text = userProfile.UserProfileAccount;
-            chkAdmin.Checked = userProfile.UserProfileUserLevelToUserAdmin == "Y" ? true : false;
+            lblID.Text = currentUser.UserProfileId==-1?"": currentUser.UserProfileId.ToString();
+            txtEmail.Text = currentUser.UserProfileMailAddress;
+            txtDomain.Text = currentUser.UserProfileDomainName;
+            txtFullName.Text = currentUser.UserProfileAccount;
+            chkAdmin.Checked = currentUser.UserProfileUserLevelToUserAdmin == "Y" ? true : false;
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -117,14 +125,15 @@ namespace JRIEAssignment
                 DataGridViewComboBoxCell comboBoxCell = (row.Cells[row.Cells.Count - 1] as DataGridViewComboBoxCell);
 
                 var userLevelCatagoryToSelect = from userLevelCategory in userLevelCategoryRepositoryData.Where(x => x.UserLevelCategoryLocalSystemId == systemId)
-                                                join UserAccess in userProfile.UserAccessList
+                                                join UserAccess in currentUser.UserAccessList
                                                 on userLevelCategory.UserLevelCategoryId equals UserAccess.UserAccessUserLevelCategoryId
                                                 select userLevelCategory.UserLevelCategoryName ?? "";
 
                 if (userLevelCatagoryToSelect.Count() != 0)
                     comboBoxCell.Value = userLevelCatagoryToSelect.FirstOrDefault();
+                
 
-                var branchCodesToCheck = userProfile.LocalSystemBranchList.Where(x => x.LocalSystemBranchLocalSystemId == systemId);
+                var branchCodesToCheck = currentUser.LocalSystemBranchList.Where(x => x.LocalSystemBranchLocalSystemId == systemId);
                 if (branchCodesToCheck.Count() != 0)
                 {
                     foreach (var branchCode in branchCodesToCheck)
@@ -142,11 +151,37 @@ namespace JRIEAssignment
             }
         }
 
+        private void SetUserProfile()
+        {
+
+            currentUser.UserProfileMailAddress = txtEmail.Text;
+            currentUser.UserProfileDomainName = txtDomain.Text;
+            currentUser.UserProfileAccount = txtFullName.Text;
+            currentUser.UserProfileUserLevelToUserAdmin = chkAdmin.Checked == true? "Y" : "N";
+
+            currentUser.UserAccessList = new List<UserAccess>();
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                var systemId = int.Parse((row.Cells[0].Value ?? -1).ToString());
+
+                DataGridViewComboBoxCell comboBoxCell = (row.Cells[row.Cells.Count - 1] as DataGridViewComboBoxCell);
+                DataGridViewComboBoxCell comboBoxCellId = (row.Cells[row.Cells.Count - 2] as DataGridViewComboBoxCell);
+
+                var catagoryId = comboBoxCellId.Items[comboBoxCell.Items.IndexOf(comboBoxCell.Value ?? "")];
+                
+                var userAccess= new UserAccess() { UserAccessStatus =0, UserAccessLocalSystemId = systemId , UserAccessUserLevelCategoryId = int.Parse(catagoryId.ToString()) };
+                currentUser.UserAccessList.Add(userAccess);
+
+            }
+        }
+
+
         private void CreateNewUser()
         {            
             currentUser = ServicesRegistery.UserProfileManager.GetNewUser();
             InitialGridStructure();
-            LoadUserProfile(currentUser);
+            LoadUserProfile();
             btnSaveUpdate.Text = "Save";
             btnDelete.Visible = false;
         }
@@ -170,7 +205,7 @@ namespace JRIEAssignment
             btnSaveUpdate.Text = "Update";
             btnDelete.Visible = true;
             InitialGridStructure();
-            LoadUserProfile(currentUser);
+            LoadUserProfile();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -178,10 +213,22 @@ namespace JRIEAssignment
             CreateNewUser();
         }
 
+        private void enableSaveButton()
+        {
+            if(txtDomain.Text.Length > 0 && txtFullName.Text.Length > 0 && txtEmail.Text.Length > 0)             
+            {
+                btnSaveUpdate.Enabled = true;
+            }            
+        }
+
+
         private void btnSaveUpdate_Click(object sender, EventArgs e)
         {
             if (currentUser.UserProfileId == -1)
+            {
+                SetUserProfile();
                 ServicesRegistery.UserProfileManager.Insert(currentUser);
+            }                
             else
                 ServicesRegistery.UserProfileManager.Update(currentUser);
 
@@ -195,6 +242,21 @@ namespace JRIEAssignment
         private void chkAdmin_CheckedChanged(object sender, EventArgs e)
         {
             dataGridView1.Visible= chkAdmin.Checked;
+        }
+
+        private void txtDomain_TextChanged(object sender, EventArgs e)
+        {
+            enableSaveButton();
+        }
+
+        private void txtFullName_TextChanged(object sender, EventArgs e)
+        {
+            enableSaveButton();
+        }
+
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+            enableSaveButton();
         }
     }
 }

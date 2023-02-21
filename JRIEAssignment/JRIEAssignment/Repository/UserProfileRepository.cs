@@ -11,7 +11,7 @@ namespace Repository
 {
     internal class UserProfileRepository : SQLDataProvider, IEntityRepository<UserProfile>
     {
-        public void Delete(UserProfile EntityData)
+        public object Delete(UserProfile EntityData)
         {
             throw new NotImplementedException();
         }
@@ -102,33 +102,51 @@ namespace Repository
             return userProfiles;
         }
 
-        public void Insert(UserProfile EntityData)
+        public object Insert(UserProfile EntityData)
         {
             string queryString = $@"INSERT INTO [UserProfile]
-                                                   ([UserProfileStatus]
-                                                   ,[UserProfileAccount]
-                                                   ,[UserProfileDomainName]
-                                                   ,[UserProfileName]
-                                                   ,[UserProfileMailAddress]
-                                                   ,[UserProfileUserLevelToUserAdmin]
-                                                   ,[UserProfileOperatorId]
-                                                   ,[UserProfileTimeStamp])
-                                             VALUES
-                                                   (
-                                                        {0}
-                                                       ,'{EntityData.UserProfileAccount}'
-                                                       ,'{EntityData.UserProfileDomainName}'
-                                                       ,'{EntityData.UserProfileDomainName + @"\" + EntityData.UserProfileName}'
-                                                       ,'{EntityData.UserProfileMailAddress}'
-                                                       ,'{EntityData.UserProfileUserLevelToUserAdmin}'
-                                                       ,{1}
-                                                       ,GETDATE()
-                                                    )";
+                                                       ([UserProfileStatus]
+                                                       ,[UserProfileAccount]
+                                                       ,[UserProfileDomainName]
+                                                       ,[UserProfileName]
+                                                       ,[UserProfileMailAddress]
+                                                       ,[UserProfileUserLevelToUserAdmin]
+                                                       ,[UserProfileOperatorId]
+                                                       ,[UserProfileTimeStamp])
+                                                 VALUES
+                                                       (
+                                                           {0}
+                                                           ,'{EntityData.UserProfileAccount}'
+                                                           ,'{EntityData.UserProfileDomainName}'
+                                                           ,'{EntityData.UserProfileDomainName + @"\" + EntityData.UserProfileName}'
+                                                           ,'{EntityData.UserProfileMailAddress}'
+                                                           ,'{EntityData.UserProfileUserLevelToUserAdmin}'
+                                                           ,{1}
+                                                           ,GETDATE()
+                                                        )";
+            var id = Execute(queryString);
+            foreach (var userAccess in EntityData.UserAccessList)
+            {
+                string userAccessQueryString = $@"INSERT INTO [dbo].[UserAccess]
+                                                           ([UserAccessStatus]
+                                                           ,[UserAccessUserProfileId]
+                                                           ,[UserAccessLocalSystemId]
+                                                           ,[UserAccessUserLevelCategoryId])
+                                                     VALUES 
+                                                        (
+                                                           {0}
+                                                           ,'{id}'
+                                                           ,'{userAccess.UserAccessLocalSystemId}'
+                                                           ,'{userAccess.UserAccessUserLevelCategoryId}'
+                                                        )";
+                Execute(userAccessQueryString);
 
-            profileId = ;
+            }
+
+            return id;
         }
 
-        public void Update(UserProfile EntityData)
+        public object Update(UserProfile EntityData)
         {
             throw new NotImplementedException();
         }
