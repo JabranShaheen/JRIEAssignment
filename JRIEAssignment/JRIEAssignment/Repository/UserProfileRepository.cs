@@ -16,7 +16,21 @@ namespace Repository
         {
             UserProfile userProfile;
 
-            var data = GetData($@"SELECT [UserProfileId] ,[UserProfileStatus] ,[UserProfileAccount] ,[UserProfileDomainName] ,[UserProfileName] ,[UserProfileMailAddress] ,[UserProfileUserLevelToUserAdmin] ,[UserProfileOperatorId] ,[UserProfileTimeStamp] FROM [Assignment].[dbo].[UserProfile](NOLOCK) WHERE UserProfileId = " + id.ToString());
+            var data = GetData($@"SELECT 
+                                        [UserProfileId] ,
+                                        [UserProfileStatus] ,
+                                        [UserProfileAccount] ,
+                                        [UserProfileDomainName] ,
+                                        [UserProfileName] ,
+                                        [UserProfileMailAddress] ,
+                                        [UserProfileUserLevelToUserAdmin] ,
+                                        [UserProfileOperatorId] ,
+                                        [UserProfileTimeStamp] 
+                                  FROM 
+                                        [Assignment].[dbo].[UserProfile](NOLOCK) 
+
+                                  WHERE 
+                                       UserProfileId = " + id.ToString());
 
             userProfile = new UserProfile() { 
                 
@@ -34,7 +48,17 @@ namespace Repository
 
             userProfile.LocalSystemBranchList = new List<LocalSystemBranch>();
 
-            var localSystemBranchData = GetData($@"SELECT [LocalSystemBranchId] ,[LocalSystemBranchStatus] ,[LocalSystemBranchUserProfileId] ,[LocalSystemBranchLocalSystemId] ,[LocalSystemBranchCode] FROM [Assignment].[dbo].[LocalSystemBranch] (NOLOCK) WHERE [LocalSystemBranchStatus] != -1 AND LocalSystemBranchUserProfileId = " + id.ToString());
+            var localSystemBranchData = GetData($@"SELECT 
+                                                        [LocalSystemBranchId],
+                                                        [LocalSystemBranchStatus] ,
+                                                        [LocalSystemBranchUserProfileId] ,
+                                                        [LocalSystemBranchLocalSystemId] ,
+                                                        [LocalSystemBranchCode] 
+                                                    FROM 
+                                                        [Assignment].[dbo].[LocalSystemBranch] (NOLOCK) 
+
+                                                    WHERE 
+                                                        [LocalSystemBranchStatus] != -1 AND LocalSystemBranchUserProfileId = " + id.ToString());
             if (localSystemBranchData != null)
             {
                 foreach (DataRow dataRow in localSystemBranchData.Rows)
@@ -89,7 +113,19 @@ namespace Repository
         {
             List<UserProfile> userProfiles = new List<UserProfile>();
 
-            var data = GetData($@"SELECT [UserProfileId] ,[UserProfileStatus] ,[UserProfileAccount] ,[UserProfileDomainName] ,[UserProfileName] ,[UserProfileMailAddress] ,[UserProfileUserLevelToUserAdmin] ,[UserProfileOperatorId] ,[UserProfileTimeStamp] FROM [Assignment].[dbo].[UserProfile](NOLOCK) WHERE [UserProfileStatus] !='-1'");
+            var data = GetData($@"SELECT [UserProfileId] ,
+                                        [UserProfileStatus] ,
+                                        [UserProfileAccount] ,
+                                        [UserProfileDomainName] ,
+                                        [UserProfileName] ,
+                                        [UserProfileMailAddress] ,
+                                        [UserProfileUserLevelToUserAdmin] ,
+                                        [UserProfileOperatorId] ,
+                                        [UserProfileTimeStamp] 
+                                  FROM 
+                                        [Assignment].[dbo].[UserProfile] (NOLOCK) 
+                                  WHERE 
+                                        [UserProfileStatus] !='-1'");
             foreach (DataRow dataRow in data.Rows)
             {
                 var userProfile = new UserProfile()
@@ -258,7 +294,15 @@ namespace Repository
                                                                         ,'{localSystemBranch.LocalSystemBranchLocalSystemId}'
                                                                         ,'{localSystemBranch.LocalSystemBranchCode}'
                                                                     )
+                                        END
+                                        ELSE
+                                        BEGIN
+                                            UPDATE [dbo].[LocalSystemBranch] SET 
+                                                [LocalSystemBranchStatus] = 0                                                
+                                            WHERE [LocalSystemBranchUserProfileId]={EntityData.UserProfileId.ToString()} 
+                                                  AND [LocalSystemBranchLocalSystemId] ={localSystemBranch.LocalSystemBranchLocalSystemId.ToString()}
                                         END";
+
                 ExecuteQuery(localSystemBranchQueryString);
             }
 
