@@ -179,8 +179,10 @@ namespace JRIEAssignment
                     foreach (DataGridViewCell dataGridCell in row.Cells)
                     {
                         bool flag;
-                        if (bool.TryParse((dataGridCell.Value ?? "").ToString(), out flag) == true)
+                        bool.TryParse((dataGridCell.Value ?? "").ToString(), out flag);
+                        if (flag == true)
                         {
+
                             var localSystemBranch = new LocalSystemBranch() { LocalSystemBranchStatus = 0, LocalSystemBranchLocalSystemId = systemId, LocalSystemBranchCode = row.Cells[dataGridCell.ColumnIndex].OwningColumn.Name };
                             currentUser.LocalSystemBranchList.Add(localSystemBranch);
                         }

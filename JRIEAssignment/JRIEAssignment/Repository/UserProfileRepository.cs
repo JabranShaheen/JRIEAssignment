@@ -266,16 +266,19 @@ namespace Repository
 
             foreach (var localSystemBranch in EntityData.LocalSystemBranchList)
             {
-                userAccessLocalSystemIdsCombo = userAccessLocalSystemIdsCombo + localSystemBranch.LocalSystemBranchUserProfileId.ToString() + "_" + localSystemBranch.LocalSystemBranchLocalSystemId.ToString() + "_" + localSystemBranch.LocalSystemBranchCode.ToString();
+                userAccessLocalSystemIdsCombo = userAccessLocalSystemIdsCombo + "'"+EntityData.UserProfileId.ToString() + "_" + localSystemBranch.LocalSystemBranchLocalSystemId.ToString() + "_" + localSystemBranch.LocalSystemBranchCode.ToString() + "'" +  ",";
             }
-            
+
+            userAccessLocalSystemIdsCombo = userAccessLocalSystemIdsCombo.Length > 0 ? userAccessLocalSystemIdsCombo.Remove(userAccessLocalSystemIdsCombo.Length - 1) : "";
+
             if (userAccessLocalSystemIdsCombo != "")
             {
                 string userAccessDeleteQueryString = $@"
                 UPDATE [LocalSystemBranch] SET [LocalSystemBranchStatus] = -1 WHERE       
                                                                                 CAST([LocalSystemBranchUserProfileId] AS VARCHAR(30)) +'_'+ 
                                                                                 CAST([LocalSystemBranchLocalSystemId] AS VARCHAR(30))+'_'+
-                                                                                CAST([LocalSystemBranchCode] AS VARCHAR(30)) NOT IN ({userAccessLocalSystemIds})";
+                                                                                CAST([LocalSystemBranchCode] AS VARCHAR(30)) NOT IN ({userAccessLocalSystemIdsCombo}) AND 
+                                                                                LocalSystemBranchUserProfileId ={EntityData.UserProfileId.ToString()}";
                 ExecuteQuery(userAccessDeleteQueryString);
 
             }
