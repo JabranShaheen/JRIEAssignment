@@ -16,7 +16,7 @@ namespace Repository
         {
             UserProfile userProfile;
 
-            var data = GetData("SELECT [UserProfileId] ,[UserProfileStatus] ,[UserProfileAccount] ,[UserProfileDomainName] ,[UserProfileName] ,[UserProfileMailAddress] ,[UserProfileUserLevelToUserAdmin] ,[UserProfileOperatorId] ,[UserProfileTimeStamp] FROM [Assignment].[dbo].[UserProfile](NOLOCK) WHERE UserProfileId = " + id.ToString());
+            var data = GetData($@"SELECT [UserProfileId] ,[UserProfileStatus] ,[UserProfileAccount] ,[UserProfileDomainName] ,[UserProfileName] ,[UserProfileMailAddress] ,[UserProfileUserLevelToUserAdmin] ,[UserProfileOperatorId] ,[UserProfileTimeStamp] FROM [Assignment].[dbo].[UserProfile](NOLOCK) WHERE UserProfileId = " + id.ToString());
 
             userProfile = new UserProfile() { 
                 
@@ -34,38 +34,52 @@ namespace Repository
 
             userProfile.LocalSystemBranchList = new List<LocalSystemBranch>();
 
-            var localSystemBranchData = GetData("SELECT [LocalSystemBranchId] ,[LocalSystemBranchStatus] ,[LocalSystemBranchUserProfileId] ,[LocalSystemBranchLocalSystemId] ,[LocalSystemBranchCode] FROM [Assignment].[dbo].[LocalSystemBranch] (NOLOCK) WHERE LocalSystemBranchUserProfileId = " + id.ToString());
-
-            foreach (DataRow dataRow in localSystemBranchData.Rows)
+            var localSystemBranchData = GetData($@"SELECT [LocalSystemBranchId] ,[LocalSystemBranchStatus] ,[LocalSystemBranchUserProfileId] ,[LocalSystemBranchLocalSystemId] ,[LocalSystemBranchCode] FROM [Assignment].[dbo].[LocalSystemBranch] (NOLOCK) WHERE [LocalSystemBranchStatus] != -1 AND LocalSystemBranchUserProfileId = " + id.ToString());
+            if (localSystemBranchData != null)
             {
-                var localSystemBranch = new LocalSystemBranch
-                { 
-                    LocalSystemBranchId = dataRow.Field<int>("LocalSystemBranchId"),
-                    LocalSystemBranchStatus = dataRow.Field<int>("LocalSystemBranchStatus"),
-                    LocalSystemBranchUserProfileId = dataRow.Field<int>("LocalSystemBranchUserProfileId"),
-                    LocalSystemBranchLocalSystemId = dataRow.Field<int>("LocalSystemBranchLocalSystemId"),
-                    LocalSystemBranchCode = dataRow.Field<string>("LocalSystemBranchCode")
-                };
-                userProfile.LocalSystemBranchList.Add(localSystemBranch);
+                foreach (DataRow dataRow in localSystemBranchData.Rows)
+                {
+                    var localSystemBranch = new LocalSystemBranch
+                    {
+                        LocalSystemBranchId = dataRow.Field<int>("LocalSystemBranchId"),
+                        LocalSystemBranchStatus = dataRow.Field<int>("LocalSystemBranchStatus"),
+                        LocalSystemBranchUserProfileId = dataRow.Field<int>("LocalSystemBranchUserProfileId"),
+                        LocalSystemBranchLocalSystemId = dataRow.Field<int>("LocalSystemBranchLocalSystemId"),
+                        LocalSystemBranchCode = dataRow.Field<string>("LocalSystemBranchCode")
+                    };
+                    userProfile.LocalSystemBranchList.Add(localSystemBranch);
+                }
             }
-
 
             userProfile.UserAccessList = new List<UserAccess>();
 
-            var UserAccessData = GetData("SELECT [UserAccessId] ,[UserAccessStatus] ,[UserAccessUserProfileId] ,[UserAccessLocalSystemId] ,[UserAccessUserLevelCategoryId]  FROM [Assignment].[dbo].[UserAccess] (NOLOCK) WHERE UserAccessUserProfileId = " + id.ToString());
+            var UserAccessData = GetData($@"SELECT [UserAccessId],
+                                                    [UserAccessStatus] ,
+                                                    [UserAccessUserProfileId] ,
+                                                    [UserAccessLocalSystemId] ,
+                                                    [UserAccessUserLevelCategoryId]  
 
-            foreach (DataRow dataRow in UserAccessData.Rows)
+                                            FROM 
+                                                    [Assignment].[dbo].[UserAccess] (NOLOCK) 
+
+                                            WHERE 
+                                                    [UserAccessStatus] != -1 AND 
+                                                    UserAccessUserProfileId = " + id.ToString());
+            if (UserAccessData != null)
             {
-                var userAccess = new UserAccess
+                foreach (DataRow dataRow in UserAccessData.Rows)
                 {
-                    UserAccessId = dataRow.Field<int>("UserAccessId"),
-                    UserAccessStatus = dataRow.Field<int>("UserAccessStatus"),
-                    UserAccessUserProfileId = dataRow.Field<int>("UserAccessUserProfileId"),
-                    UserAccessLocalSystemId = dataRow.Field<int>("UserAccessLocalSystemId"),
-                    UserAccessUserLevelCategoryId = dataRow.Field<int>("UserAccessUserLevelCategoryId")
-                };
+                    var userAccess = new UserAccess
+                    {
+                        UserAccessId = dataRow.Field<int>("UserAccessId"),
+                        UserAccessStatus = dataRow.Field<int>("UserAccessStatus"),
+                        UserAccessUserProfileId = dataRow.Field<int>("UserAccessUserProfileId"),
+                        UserAccessLocalSystemId = dataRow.Field<int>("UserAccessLocalSystemId"),
+                        UserAccessUserLevelCategoryId = dataRow.Field<int>("UserAccessUserLevelCategoryId")
+                    };
 
-                userProfile.UserAccessList.Add(userAccess);
+                    userProfile.UserAccessList.Add(userAccess);
+                }
             }
 
             return userProfile;
@@ -75,7 +89,7 @@ namespace Repository
         {
             List<UserProfile> userProfiles = new List<UserProfile>();
 
-            var data = GetData("SELECT [UserProfileId] ,[UserProfileStatus] ,[UserProfileAccount] ,[UserProfileDomainName] ,[UserProfileName] ,[UserProfileMailAddress] ,[UserProfileUserLevelToUserAdmin] ,[UserProfileOperatorId] ,[UserProfileTimeStamp] FROM [Assignment].[dbo].[UserProfile](NOLOCK) WHERE [UserProfileStatus] !='-1'");
+            var data = GetData($@"SELECT [UserProfileId] ,[UserProfileStatus] ,[UserProfileAccount] ,[UserProfileDomainName] ,[UserProfileName] ,[UserProfileMailAddress] ,[UserProfileUserLevelToUserAdmin] ,[UserProfileOperatorId] ,[UserProfileTimeStamp] FROM [Assignment].[dbo].[UserProfile](NOLOCK) WHERE [UserProfileStatus] !='-1'");
             foreach (DataRow dataRow in data.Rows)
             {
                 var userProfile = new UserProfile()
@@ -163,63 +177,113 @@ namespace Repository
 
         public object Update(UserProfile EntityData)
         {
-            string queryString = $@"INSERT INTO [UserProfile]
-                                                       ([UserProfileStatus]
-                                                       ,[UserProfileAccount]
-                                                       ,[UserProfileDomainName]
-                                                       ,[UserProfileName]
-                                                       ,[UserProfileMailAddress]
-                                                       ,[UserProfileUserLevelToUserAdmin]
-                                                       ,[UserProfileOperatorId]
-                                                       ,[UserProfileTimeStamp])
-                                                 VALUES
-                                                       (
-                                                           {0}
-                                                           ,'{EntityData.UserProfileAccount}'
-                                                           ,'{EntityData.UserProfileDomainName}'
-                                                           ,'{EntityData.UserProfileDomainName + @"\" + EntityData.UserProfileName}'
-                                                           ,'{EntityData.UserProfileMailAddress}'
-                                                           ,'{EntityData.UserProfileUserLevelToUserAdmin}'
-                                                           ,{1}
-                                                           ,GETDATE()
-                                                        )";
-            var id = ExecuteUpdate(queryString);
+            string UpdateQuery = $@"UPDATE [dbo].[UserProfile]
+                                       SET 
+		                                   [UserProfileAccount] = '{EntityData.UserProfileAccount}'
+                                          ,[UserProfileDomainName] = '{EntityData.UserProfileDomainName}'
+                                          ,[UserProfileName] = '{EntityData.UserProfileName}'
+                                          ,[UserProfileMailAddress] = '{EntityData.UserProfileMailAddress}'
+                                          ,[UserProfileUserLevelToUserAdmin] = '{EntityData.UserProfileUserLevelToUserAdmin}'
+                                          ,[UserProfileOperatorId] ={1}                                          
+                                        WHERE 
+                                            [UserProfileId] = " + EntityData.UserProfileId.ToString();
+
+            var id = ExecuteUpdate(UpdateQuery);
+
             foreach (var userAccess in EntityData.UserAccessList)
             {
-                string userAccessQueryString = $@"INSERT INTO [dbo].[UserAccess]
-                                                           ([UserAccessStatus]
-                                                           ,[UserAccessUserProfileId]
-                                                           ,[UserAccessLocalSystemId]
-                                                           ,[UserAccessUserLevelCategoryId])
-                                                     VALUES 
-                                                        (
-                                                           {0}
-                                                           ,'{id}'
-                                                           ,'{userAccess.UserAccessLocalSystemId}'
-                                                           ,'{userAccess.UserAccessUserLevelCategoryId}'
-                                                        )";
-                ExecuteInsert(userAccessQueryString);
+                    string userAccessQueryString = $@"IF NOT EXISTS(SELECT * FROM [dbo].[UserAccess] WHERE [UserAccessLocalSystemId]={userAccess.UserAccessLocalSystemId.ToString()} 
+                                                                                      AND UserAccessUserProfileId ={EntityData.UserProfileId.ToString()})
+                                        BEGIN
+                                            INSERT INTO [dbo].[UserAccess]
+                                                                        ([UserAccessStatus]
+                                                                        ,[UserAccessUserProfileId]
+                                                                        ,[UserAccessLocalSystemId]
+                                                                        ,[UserAccessUserLevelCategoryId])
+                                                                    VALUES 
+                                                                    (
+                                                                        {0}
+                                                                        ,'{EntityData.UserProfileId.ToString()}'
+                                                                        ,'{userAccess.UserAccessLocalSystemId}'
+                                                                        ,'{userAccess.UserAccessUserLevelCategoryId}'
+                                                                    )
+                                        END
+                                        ELSE
+                                        BEGIN
+                                            UPDATE [dbo].[UserAccess] SET 
+                                                [UserAccessStatus] = 0,
+                                                [UserAccessUserLevelCategoryId] = {userAccess.UserAccessUserLevelCategoryId} 
+                                            WHERE [UserAccessLocalSystemId]={userAccess.UserAccessLocalSystemId.ToString()} 
+                                                                             AND UserAccessUserProfileId ={EntityData.UserProfileId.ToString()}
+                                        END";
+                ExecuteQuery(userAccessQueryString);                
+            }
+
+            var userAccessLocalSystemIds = "";
+
+            foreach (var userAccess in EntityData.UserAccessList)
+            {
+                userAccessLocalSystemIds = userAccessLocalSystemIds+ userAccess.UserAccessLocalSystemId.ToString()+ ",";
+            }
+            userAccessLocalSystemIds = userAccessLocalSystemIds.Length > 0 ?userAccessLocalSystemIds.Remove(userAccessLocalSystemIds.Length - 1):"";
+            if (userAccessLocalSystemIds !="")
+            {
+                string userAccessDeleteQueryString = $@"
+                UPDATE UserAccess SET [UserAccessStatus] = -1 WHERE UserAccessUserProfileId ={EntityData.UserProfileId.ToString()} AND [UserAccessLocalSystemId] NOT IN ({userAccessLocalSystemIds})";
+                ExecuteQuery(userAccessDeleteQueryString);
 
             }
+            else 
+            {
+                string userAccessDeleteQueryString = $@"
+                UPDATE UserAccess SET [UserAccessStatus] = -1 WHERE UserAccessUserProfileId ={EntityData.UserProfileId.ToString()}";
+                ExecuteQuery(userAccessDeleteQueryString);
+            }
+
 
             foreach (var localSystemBranch in EntityData.LocalSystemBranchList)
             {
+                string localSystemBranchQueryString = $@"IF NOT EXISTS(SELECT * FROM [dbo].[LocalSystemBranch] WHERE [LocalSystemBranchUserProfileId]={EntityData.UserProfileId.ToString()} 
+                                                                                      AND [LocalSystemBranchLocalSystemId] ={localSystemBranch.LocalSystemBranchLocalSystemId.ToString()})
+                                        BEGIN
+                                            INSERT INTO [dbo].[LocalSystemBranch]
+                                                                        ([LocalSystemBranchStatus]
+                                                                        ,[LocalSystemBranchUserProfileId]
+                                                                        ,[LocalSystemBranchLocalSystemId]
+                                                                        ,[LocalSystemBranchCode])
+                                                                    VALUES 
+                                                                    (
+                                                                        {0}
+                                                                        ,'{EntityData.UserProfileId.ToString()}'
+                                                                        ,'{localSystemBranch.LocalSystemBranchLocalSystemId}'
+                                                                        ,'{localSystemBranch.LocalSystemBranchCode}'
+                                                                    )
+                                        END";
+                ExecuteQuery(localSystemBranchQueryString);
+            }
 
-                string LocalSystemBranchInsertStatment = $@"INSERT INTO [dbo].[LocalSystemBranch]
-                                                               ([LocalSystemBranchStatus]
-                                                               ,[LocalSystemBranchUserProfileId]
-                                                               ,[LocalSystemBranchLocalSystemId]
-                                                               ,[LocalSystemBranchCode])
-                                                     VALUES 
-                                                        (
-                                                           {0}
-                                                           ,'{id}'
-                                                           ,'{localSystemBranch.LocalSystemBranchLocalSystemId}'
-                                                           ,'{localSystemBranch.LocalSystemBranchCode}'
-                                                        )";
+            var userAccessLocalSystemIdsCombo = "";
 
-                ExecuteInsert(LocalSystemBranchInsertStatment);
+            foreach (var localSystemBranch in EntityData.LocalSystemBranchList)
+            {
+                userAccessLocalSystemIdsCombo = userAccessLocalSystemIdsCombo + localSystemBranch.LocalSystemBranchUserProfileId.ToString() + "_" + localSystemBranch.LocalSystemBranchLocalSystemId.ToString() + "_" + localSystemBranch.LocalSystemBranchCode.ToString();
+            }
+            
+            if (userAccessLocalSystemIdsCombo != "")
+            {
+                string userAccessDeleteQueryString = $@"
+                UPDATE [LocalSystemBranch] SET [LocalSystemBranchStatus] = -1 WHERE       
+                                                                                CAST([LocalSystemBranchUserProfileId] AS VARCHAR(30)) +'_'+ 
+                                                                                CAST([LocalSystemBranchLocalSystemId] AS VARCHAR(30))+'_'+
+                                                                                CAST([LocalSystemBranchCode] AS VARCHAR(30)) NOT IN ({userAccessLocalSystemIds})";
+                ExecuteQuery(userAccessDeleteQueryString);
 
+            }
+            else
+            {
+                string userAccessDeleteQueryString = $@"
+                UPDATE UserAccess SET [LocalSystemBranchStatus] = -1 WHERE [LocalSystemBranchUserProfileId] ={EntityData.UserProfileId.ToString()}";
+                ExecuteQuery(userAccessDeleteQueryString);
             }
 
             return id;
@@ -242,44 +306,13 @@ namespace Repository
 
             ExecuteUpdate(UserAccessDeletequery);
 
+            string LocalSystemBranchDeletequery = $@"UPDATE 
+                                        [dbo].[LocalSystemBranch]
+                                        SET [LocalSystemBranchStatus] = -1
+                                    WHERE 
+                                        [LocalSystemBranchUserProfileId] = " + EntityData.UserProfileId.ToString();
 
-            //foreach (var userAccess in EntityData.UserAccessList)
-            //{
-            //    string userAccessQueryString = $@"INSERT INTO [dbo].[UserAccess]
-            //                                               ([UserAccessStatus]
-            //                                               ,[UserAccessUserProfileId]
-            //                                               ,[UserAccessLocalSystemId]
-            //                                               ,[UserAccessUserLevelCategoryId])
-            //                                         VALUES 
-            //                                            (
-            //                                               {0}
-            //                                               ,'{id}'
-            //                                               ,'{userAccess.UserAccessLocalSystemId}'
-            //                                               ,'{userAccess.UserAccessUserLevelCategoryId}'
-            //                                            )";
-            //    ExecuteInsert(userAccessQueryString);
-
-            //}
-
-            //foreach (var localSystemBranch in EntityData.LocalSystemBranchList)
-            //{
-
-            //    string LocalSystemBranchInsertStatment = $@"INSERT INTO [dbo].[LocalSystemBranch]
-            //                                                   ([LocalSystemBranchStatus]
-            //                                                   ,[LocalSystemBranchUserProfileId]
-            //                                                   ,[LocalSystemBranchLocalSystemId]
-            //                                                   ,[LocalSystemBranchCode])
-            //                                         VALUES 
-            //                                            (
-            //                                               {0}
-            //                                               ,'{id}'
-            //                                               ,'{localSystemBranch.LocalSystemBranchLocalSystemId}'
-            //                                               ,'{localSystemBranch.LocalSystemBranchCode}'
-            //                                            )";
-
-            //    ExecuteInsert(LocalSystemBranchInsertStatment);
-
-            //}
+            ExecuteUpdate(LocalSystemBranchDeletequery);          
 
             return numberOfRows;
         }

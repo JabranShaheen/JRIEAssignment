@@ -51,7 +51,7 @@ namespace EntityManager
 
         public object Update(UserProfile EntityData)
         {
-            throw new NotImplementedException();
+            return _userProfileRepositoy.Update(EntityData);
         }
 
     }

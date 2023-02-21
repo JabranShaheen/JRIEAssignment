@@ -215,12 +215,19 @@ namespace JRIEAssignment
 
         private void lstUsers_Click(object sender, EventArgs e)
         {
-            currentUser = ServicesRegistery.UserProfileManager.Get(((UserProfile)lstUsers.SelectedItems[0].Tag).UserProfileId);
+            try
+            {
+                currentUser = ServicesRegistery.UserProfileManager.Get(((UserProfile)lstUsers.SelectedItems[0].Tag).UserProfileId);
 
-            btnSaveUpdate.Text = "Update";
-            btnDelete.Visible = true;
-            InitialGridStructure();
-            LoadUserProfile();
+                btnSaveUpdate.Text = "Update";
+                btnDelete.Visible = true;
+                InitialGridStructure();
+                LoadUserProfile();
+            }
+            catch (Exception ex)
+            { 
+            
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -244,7 +251,7 @@ namespace JRIEAssignment
             {
                 SetUserProfile();
                 int id;
-                currentUser.UserProfileId = int.TryParse(ServicesRegistery.UserProfileManager.Insert(currentUser).ToString(), out id) ==true? id : -1;
+                currentUser.UserProfileId = int.TryParse(ServicesRegistery.UserProfileManager.Insert(currentUser).ToString(), out id) == true ? id : -1;
                 lblID.Text = currentUser.UserProfileId == -1 ? "" : currentUser.UserProfileId.ToString();
 
                 if (lblID.Text != "")
@@ -259,9 +266,14 @@ namespace JRIEAssignment
                     userItem.Text = currentUser.UserProfileName;
                     lstUsers.Items.Add(userItem);
                 }
-            }                
+            }
             else
+            {
+                SetUserProfile();
                 ServicesRegistery.UserProfileManager.Update(currentUser);
+                InitialUsersList();
+            }
+                
 
         }
 
