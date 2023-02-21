@@ -19,7 +19,7 @@ namespace EntityManager
 
         public object Delete(UserProfile EntityData)
         {
-            throw new NotImplementedException();
+            return _userProfileRepositoy.Delete(EntityData);
         }
 
         public UserProfile Get(int id)

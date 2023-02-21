@@ -162,28 +162,32 @@ namespace JRIEAssignment
             currentUser.UserAccessList = new List<UserAccess>();
             currentUser.LocalSystemBranchList = new List<LocalSystemBranch>();
 
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            if (currentUser.UserProfileUserLevelToUserAdmin=="Y")
             {
-                var systemId = int.Parse((row.Cells[0].Value ?? -1).ToString());
-
-                DataGridViewComboBoxCell comboBoxCell = (row.Cells[row.Cells.Count - 1] as DataGridViewComboBoxCell);
-                DataGridViewComboBoxCell comboBoxCellId = (row.Cells[row.Cells.Count - 2] as DataGridViewComboBoxCell);
-
-                var catagoryId = comboBoxCellId.Items[comboBoxCell.Items.IndexOf(comboBoxCell.Value ?? "")];
-                
-                var userAccess = new UserAccess() { UserAccessStatus =0, UserAccessLocalSystemId = systemId , UserAccessUserLevelCategoryId = int.Parse(catagoryId.ToString()) };
-                currentUser.UserAccessList.Add(userAccess);
-
-                foreach (DataGridViewCell dataGridCell in row.Cells)
+                foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
-                    bool flag;
-                    if (bool.TryParse((dataGridCell.Value??"").ToString(), out flag) == true)
+                    var systemId = int.Parse((row.Cells[0].Value ?? -1).ToString());
+
+                    DataGridViewComboBoxCell comboBoxCell = (row.Cells[row.Cells.Count - 1] as DataGridViewComboBoxCell);
+                    DataGridViewComboBoxCell comboBoxCellId = (row.Cells[row.Cells.Count - 2] as DataGridViewComboBoxCell);
+
+                    var catagoryId = comboBoxCellId.Items[comboBoxCell.Items.IndexOf(comboBoxCell.Value ?? "")];
+
+                    var userAccess = new UserAccess() { UserAccessStatus = 0, UserAccessLocalSystemId = systemId, UserAccessUserLevelCategoryId = int.Parse(catagoryId.ToString()) };
+                    currentUser.UserAccessList.Add(userAccess);
+
+                    foreach (DataGridViewCell dataGridCell in row.Cells)
                     {
-                        var localSystemBranch = new LocalSystemBranch() { LocalSystemBranchStatus = 0, LocalSystemBranchLocalSystemId = systemId, LocalSystemBranchCode = row.Cells[dataGridCell.ColumnIndex].OwningColumn.Name };
-                        currentUser.LocalSystemBranchList.Add(localSystemBranch);   
+                        bool flag;
+                        if (bool.TryParse((dataGridCell.Value ?? "").ToString(), out flag) == true)
+                        {
+                            var localSystemBranch = new LocalSystemBranch() { LocalSystemBranchStatus = 0, LocalSystemBranchLocalSystemId = systemId, LocalSystemBranchCode = row.Cells[dataGridCell.ColumnIndex].OwningColumn.Name };
+                            currentUser.LocalSystemBranchList.Add(localSystemBranch);
+                        }
                     }
                 }
             }
+
         }
 
 
@@ -212,6 +216,7 @@ namespace JRIEAssignment
         private void lstUsers_Click(object sender, EventArgs e)
         {
             currentUser = ServicesRegistery.UserProfileManager.Get(((UserProfile)lstUsers.SelectedItems[0].Tag).UserProfileId);
+
             btnSaveUpdate.Text = "Update";
             btnDelete.Visible = true;
             InitialGridStructure();
@@ -248,6 +253,11 @@ namespace JRIEAssignment
                     btnDelete.Visible = true;
                     InitialGridStructure();
                     LoadUserProfile();
+
+                    ListViewItem userItem = new ListViewItem();
+                    userItem.Tag = currentUser;
+                    userItem.Text = currentUser.UserProfileName;
+                    lstUsers.Items.Add(userItem);
                 }
             }                
             else
@@ -257,7 +267,11 @@ namespace JRIEAssignment
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            ServicesRegistery.UserProfileManager.Delete(currentUser);
+            if (ServicesRegistery.UserProfileManager.Delete(currentUser) != null)
+            {
+                InitialUsersList();
+                CreateNewUser();
+            }
         }
 
         private void chkAdmin_CheckedChanged(object sender, EventArgs e)

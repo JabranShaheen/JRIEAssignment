@@ -59,5 +59,26 @@ namespace JRIEAssignment.Repository.SQLDataProvider
                 return null;
             }
         }
+
+        protected Object ExecuteUpdate(string aSqlQuery)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connString))
+                {
+                    SqlCommand cmd = new SqlCommand(aSqlQuery, connection);
+                    connection.Open();
+                    int numberOfRecords  = cmd.ExecuteNonQuery();
+
+                    connection.Close();
+                    return numberOfRecords;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
     }
 }
