@@ -55,23 +55,22 @@
     <Compile Include="EntityManager\UserProfileManager.cs" />
     <Compile Include="RepositoryAbstraction\IEntityRepository.cs" />
     <Compile Include="Repository\BranchRepository.cs" />
-    <Compile Include="Repository\LocalSystemBranchRepository.cs" />
     <Compile Include="Repository\LocalSystemRepository.cs" />
     <Compile Include="Repository\SQLDataProvider\SQLDataProvider.cs" />
     <Compile Include="Repository\UserAccessRepository.cs" />
     <Compile Include="Repository\UserLevelCategoryRepository.cs" />
     <Compile Include="Repository\UserProfileRepository.cs" />
     <Compile Include="Services\ServicesRegistery.cs" />
-    <Compile Include="UserProfile.cs">
+    <Compile Include="UserProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserProfile.Designer.cs">
-      <DependentUpon>UserProfile.cs</DependentUpon>
+    <Compile Include="UserProfileForm.Designer.cs">
+      <DependentUpon>UserProfileForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="UserProfile.resx">
-      <DependentUpon>UserProfile.cs</DependentUpon>
+    <EmbeddedResource Include="UserProfileForm.resx">
+      <DependentUpon>UserProfileForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

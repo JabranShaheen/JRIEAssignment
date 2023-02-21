@@ -7,6 +7,6 @@ namespace EntityManagerAbstraction
 {
     public interface IUserProfileManager : IEntityManager<UserProfile> 
     {
-        UserProfile GetNewUser(int id);
+        UserProfile GetNewUser();
     }
 }

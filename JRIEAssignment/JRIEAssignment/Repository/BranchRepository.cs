@@ -23,9 +23,9 @@ namespace Repository
         {
             List<Branch> branches = new List<Branch>();
             var data = GetData("SELECT BranchCode, BranchName FROM Branch (NOLOCK)");
-            foreach (DataRow aRow in data.Rows)
+            foreach (DataRow dataRow in data.Rows)
             {
-                var branch = new Branch() { BranchCode = aRow.Field<string>("BranchCode"), BranchName = aRow.Field<string>("BranchName") };
+                var branch = new Branch() { BranchCode = dataRow.Field<string>("BranchCode"), BranchName = dataRow.Field<string>("BranchName") };
                 branches.Add(branch);
             }
             return branches;

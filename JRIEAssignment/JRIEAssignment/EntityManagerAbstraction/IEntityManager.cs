@@ -7,7 +7,7 @@ namespace EntityManagerAbstraction
 {
     public interface IEntityManager<T> where T : IEntity
     {
-        IEnumerable<T> GetAll(T EntityData);
+        IEnumerable<T> GetAll();
         T Get(int id);
         void Insert(T EntityData);
         void Delete(T EntityData);

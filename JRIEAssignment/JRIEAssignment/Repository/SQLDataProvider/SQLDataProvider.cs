@@ -18,9 +18,8 @@ namespace JRIEAssignment.Repository.SQLDataProvider
                 using (SqlConnection connection = new SqlConnection(_connString))
                 {
                     DataTable oTable = new DataTable("table");
-                    // Creating the command object
-                    SqlCommand cmd = new SqlCommand(aSqlQuery, connection);
-                    // Opening Connection  
+            
+                    SqlCommand cmd = new SqlCommand(aSqlQuery, connection);            
                     connection.Open();
                     using (var sdr = cmd.ExecuteReader())
                     {
@@ -31,8 +30,7 @@ namespace JRIEAssignment.Repository.SQLDataProvider
                 }
             }
             catch (Exception e)
-            {
-                Console.WriteLine("Failed to load data " + e);
+            {                
                 return null;
             }
         }
