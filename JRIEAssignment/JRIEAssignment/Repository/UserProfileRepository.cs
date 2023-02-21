@@ -118,13 +118,13 @@ namespace Repository
                                                            {0}
                                                            ,'{EntityData.UserProfileAccount}'
                                                            ,'{EntityData.UserProfileDomainName}'
-                                                           ,'{EntityData.UserProfileDomainName + @"\" + EntityData.UserProfileName}'
+                                                           ,'{EntityData.UserProfileName}'
                                                            ,'{EntityData.UserProfileMailAddress}'
                                                            ,'{EntityData.UserProfileUserLevelToUserAdmin}'
                                                            ,{1}
                                                            ,GETDATE()
                                                         )";
-            var id = Execute(queryString);
+            var id = ExecuteInsert(queryString);
             foreach (var userAccess in EntityData.UserAccessList)
             {
                 string userAccessQueryString = $@"INSERT INTO [dbo].[UserAccess]
@@ -139,7 +139,26 @@ namespace Repository
                                                            ,'{userAccess.UserAccessLocalSystemId}'
                                                            ,'{userAccess.UserAccessUserLevelCategoryId}'
                                                         )";
-                Execute(userAccessQueryString);
+                ExecuteInsert(userAccessQueryString);
+
+            }
+
+            foreach (var localSystemBranch in EntityData.LocalSystemBranchList)
+            {
+                string LocalSystemBranchInsertStatment = $@"INSERT INTO [dbo].[LocalSystemBranch]
+                                                               ([LocalSystemBranchStatus]
+                                                               ,[LocalSystemBranchUserProfileId]
+                                                               ,[LocalSystemBranchLocalSystemId]
+                                                               ,[LocalSystemBranchCode])
+                                                     VALUES 
+                                                        (
+                                                           {0}
+                                                           ,'{id}'
+                                                           ,'{localSystemBranch.LocalSystemBranchLocalSystemId}'
+                                                           ,'{localSystemBranch.LocalSystemBranchCode}'
+                                                        )";
+
+                ExecuteInsert(LocalSystemBranchInsertStatment);
 
             }
 
@@ -148,7 +167,66 @@ namespace Repository
 
         public object Update(UserProfile EntityData)
         {
-            throw new NotImplementedException();
+            string queryString = $@"INSERT INTO [UserProfile]
+                                                       ([UserProfileStatus]
+                                                       ,[UserProfileAccount]
+                                                       ,[UserProfileDomainName]
+                                                       ,[UserProfileName]
+                                                       ,[UserProfileMailAddress]
+                                                       ,[UserProfileUserLevelToUserAdmin]
+                                                       ,[UserProfileOperatorId]
+                                                       ,[UserProfileTimeStamp])
+                                                 VALUES
+                                                       (
+                                                           {0}
+                                                           ,'{EntityData.UserProfileAccount}'
+                                                           ,'{EntityData.UserProfileDomainName}'
+                                                           ,'{EntityData.UserProfileDomainName + @"\" + EntityData.UserProfileName}'
+                                                           ,'{EntityData.UserProfileMailAddress}'
+                                                           ,'{EntityData.UserProfileUserLevelToUserAdmin}'
+                                                           ,{1}
+                                                           ,GETDATE()
+                                                        )";
+            var id = ExecuteInsert(queryString);
+            foreach (var userAccess in EntityData.UserAccessList)
+            {
+                string userAccessQueryString = $@"INSERT INTO [dbo].[UserAccess]
+                                                           ([UserAccessStatus]
+                                                           ,[UserAccessUserProfileId]
+                                                           ,[UserAccessLocalSystemId]
+                                                           ,[UserAccessUserLevelCategoryId])
+                                                     VALUES 
+                                                        (
+                                                           {0}
+                                                           ,'{id}'
+                                                           ,'{userAccess.UserAccessLocalSystemId}'
+                                                           ,'{userAccess.UserAccessUserLevelCategoryId}'
+                                                        )";
+                ExecuteInsert(userAccessQueryString);
+
+            }
+
+            foreach (var localSystemBranch in EntityData.LocalSystemBranchList)
+            {
+
+                string LocalSystemBranchInsertStatment = $@"INSERT INTO [dbo].[LocalSystemBranch]
+                                                               ([LocalSystemBranchStatus]
+                                                               ,[LocalSystemBranchUserProfileId]
+                                                               ,[LocalSystemBranchLocalSystemId]
+                                                               ,[LocalSystemBranchCode])
+                                                     VALUES 
+                                                        (
+                                                           {0}
+                                                           ,'{id}'
+                                                           ,'{localSystemBranch.LocalSystemBranchLocalSystemId}'
+                                                           ,'{localSystemBranch.LocalSystemBranchCode}'
+                                                        )";
+
+                ExecuteInsert(LocalSystemBranchInsertStatment);
+
+            }
+
+            return id;
         }
     }
 }

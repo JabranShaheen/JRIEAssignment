@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Security.Principal;
 
 namespace JRIEAssignment.Repository.SQLDataProvider
 {
@@ -35,16 +36,20 @@ namespace JRIEAssignment.Repository.SQLDataProvider
             }
         }
 
-        protected Object Execute(string aSqlQuery)
+        protected Object ExecuteInsert(string aSqlQuery)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connString))
                 {                    
 
-                    SqlCommand cmd = new SqlCommand(aSqlQuery, connection);
+                    SqlCommand cmd = new SqlCommand(aSqlQuery, connection);                    
                     connection.Open();
-                    var id = cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = "SELECT SCOPE_IDENTITY()";
+                    var id = cmd.ExecuteScalar().ToString();
+                    
                     connection.Close();
                     return id;
                 }

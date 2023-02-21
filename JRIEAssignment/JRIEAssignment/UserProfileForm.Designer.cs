@@ -286,6 +286,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UserProfileForm";
             this.Text = "User Profile";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.UserProfile_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

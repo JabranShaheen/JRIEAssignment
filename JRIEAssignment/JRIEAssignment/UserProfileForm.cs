@@ -158,8 +158,9 @@ namespace JRIEAssignment
             currentUser.UserProfileDomainName = txtDomain.Text;
             currentUser.UserProfileAccount = txtFullName.Text;
             currentUser.UserProfileUserLevelToUserAdmin = chkAdmin.Checked == true? "Y" : "N";
-
+            currentUser.UserProfileName = currentUser.UserProfileDomainName + '\\' + currentUser.UserProfileAccount;
             currentUser.UserAccessList = new List<UserAccess>();
+            currentUser.LocalSystemBranchList = new List<LocalSystemBranch>();
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -170,9 +171,18 @@ namespace JRIEAssignment
 
                 var catagoryId = comboBoxCellId.Items[comboBoxCell.Items.IndexOf(comboBoxCell.Value ?? "")];
                 
-                var userAccess= new UserAccess() { UserAccessStatus =0, UserAccessLocalSystemId = systemId , UserAccessUserLevelCategoryId = int.Parse(catagoryId.ToString()) };
+                var userAccess = new UserAccess() { UserAccessStatus =0, UserAccessLocalSystemId = systemId , UserAccessUserLevelCategoryId = int.Parse(catagoryId.ToString()) };
                 currentUser.UserAccessList.Add(userAccess);
 
+                foreach (DataGridViewCell dataGridCell in row.Cells)
+                {
+                    bool flag;
+                    if (bool.TryParse((dataGridCell.Value??"").ToString(), out flag) == true)
+                    {
+                        var localSystemBranch = new LocalSystemBranch() { LocalSystemBranchStatus = 0, LocalSystemBranchLocalSystemId = systemId, LocalSystemBranchCode = row.Cells[dataGridCell.ColumnIndex].OwningColumn.Name };
+                        currentUser.LocalSystemBranchList.Add(localSystemBranch);   
+                    }
+                }
             }
         }
 
@@ -211,6 +221,7 @@ namespace JRIEAssignment
         private void button1_Click(object sender, EventArgs e)
         {
             CreateNewUser();
+            enableSaveButton();
         }
 
         private void enableSaveButton()
@@ -227,7 +238,17 @@ namespace JRIEAssignment
             if (currentUser.UserProfileId == -1)
             {
                 SetUserProfile();
-                ServicesRegistery.UserProfileManager.Insert(currentUser);
+                int id;
+                currentUser.UserProfileId = int.TryParse(ServicesRegistery.UserProfileManager.Insert(currentUser).ToString(), out id) ==true? id : -1;
+                lblID.Text = currentUser.UserProfileId == -1 ? "" : currentUser.UserProfileId.ToString();
+
+                if (lblID.Text != "")
+                {
+                    btnSaveUpdate.Text = "Update";
+                    btnDelete.Visible = true;
+                    InitialGridStructure();
+                    LoadUserProfile();
+                }
             }                
             else
                 ServicesRegistery.UserProfileManager.Update(currentUser);
