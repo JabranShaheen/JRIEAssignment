@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Xml.Linq;
-
-namespace EntitiesAbstraction.Entities
+﻿namespace EntitiesAbstraction.Entities
 {
     public class UserLevelCategory : IEntity
     {

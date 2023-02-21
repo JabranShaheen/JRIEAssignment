@@ -1,7 +1,4 @@
-﻿using EntitiesAbstraction;
-using EntitiesAbstraction.Entities;
-using System;
-using System.Collections.Generic;
+﻿using EntitiesAbstraction.Entities;
 
 namespace EntityManagerAbstraction
 {

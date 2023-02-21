@@ -1,9 +1,8 @@
-﻿using RepositoryAbstraction.Repositories;
-using EntitiesAbstraction.Entities;
+﻿using EntitiesAbstraction.Entities;
+using JRIEAssignment.Repository.SQLDataProvider;
+using RepositoryAbstraction.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using JRIEAssignment.Repository.SQLDataProvider;
 using System.Data;
 
 namespace Repository

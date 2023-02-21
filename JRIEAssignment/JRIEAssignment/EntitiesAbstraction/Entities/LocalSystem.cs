@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EntitiesAbstraction.Entities
+﻿namespace EntitiesAbstraction.Entities
 {
     public class LocalSystem : IEntity
     {

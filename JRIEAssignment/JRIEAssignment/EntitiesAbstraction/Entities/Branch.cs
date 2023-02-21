@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EntitiesAbstraction.Entities
+﻿namespace EntitiesAbstraction.Entities
 {
     public class Branch : IEntity
     {

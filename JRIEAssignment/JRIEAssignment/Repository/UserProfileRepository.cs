@@ -329,7 +329,7 @@ namespace Repository
             else
             {
                 string userAccessDeleteQueryString = $@"
-                UPDATE UserAccess SET [LocalSystemBranchStatus] = -1 WHERE [LocalSystemBranchUserProfileId] ={EntityData.UserProfileId.ToString()}";
+                UPDATE [LocalSystemBranch] SET [LocalSystemBranchStatus] = -1 WHERE [LocalSystemBranchUserProfileId] ={EntityData.UserProfileId.ToString()}";
                 ExecuteQuery(userAccessDeleteQueryString);
             }
 

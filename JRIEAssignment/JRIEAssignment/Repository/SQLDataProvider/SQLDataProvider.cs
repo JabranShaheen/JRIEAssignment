@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Security.Principal;
+using System.Data.SqlClient;
 
 namespace JRIEAssignment.Repository.SQLDataProvider
 {
     public class SQLDataProvider
     {
-        private static string _connString = "Data Source=JABRANPC\\SQLEXPRESS;Initial Catalog = Assignment; Integrated Security=true;";
+        private static string connectionString = "Data Source=JABRANPC\\SQLEXPRESS;Initial Catalog = Assignment; Integrated Security=true;";
 
         protected DataTable GetData(string aSqlQuery)
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     DataTable table = new DataTable("tbl");
             
@@ -40,7 +36,7 @@ namespace JRIEAssignment.Repository.SQLDataProvider
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {                    
 
                     SqlCommand cmd = new SqlCommand(aSqlQuery, connection);                    
@@ -64,7 +60,7 @@ namespace JRIEAssignment.Repository.SQLDataProvider
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlCommand cmd = new SqlCommand(aSqlQuery, connection);
                     connection.Open();
@@ -84,7 +80,7 @@ namespace JRIEAssignment.Repository.SQLDataProvider
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlCommand cmd = new SqlCommand(aSqlQuery, connection);
                     connection.Open();

@@ -3,10 +3,6 @@ using EntityManager;
 using EntityManagerAbstraction;
 using Repository;
 using RepositoryAbstraction.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace JRIEAssignment.Services
 {
