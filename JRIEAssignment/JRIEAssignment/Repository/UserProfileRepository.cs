@@ -104,7 +104,28 @@ namespace Repository
 
         public void Insert(UserProfile EntityData)
         {
-            throw new NotImplementedException();
+            string queryString = $@"INSERT INTO [UserProfile]
+                                                   ([UserProfileStatus]
+                                                   ,[UserProfileAccount]
+                                                   ,[UserProfileDomainName]
+                                                   ,[UserProfileName]
+                                                   ,[UserProfileMailAddress]
+                                                   ,[UserProfileUserLevelToUserAdmin]
+                                                   ,[UserProfileOperatorId]
+                                                   ,[UserProfileTimeStamp])
+                                             VALUES
+                                                   (
+                                                        {0}
+                                                       ,'{EntityData.UserProfileAccount}'
+                                                       ,'{EntityData.UserProfileDomainName}'
+                                                       ,'{EntityData.UserProfileDomainName + @"\" + EntityData.UserProfileName}'
+                                                       ,'{EntityData.UserProfileMailAddress}'
+                                                       ,'{EntityData.UserProfileUserLevelToUserAdmin}'
+                                                       ,{1}
+                                                       ,GETDATE()
+                                                    )";
+
+            profileId = int.Parse(ExeNonQuery(queryString));
         }
 
         public void Update(UserProfile EntityData)
