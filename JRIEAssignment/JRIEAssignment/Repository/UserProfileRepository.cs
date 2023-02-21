@@ -125,7 +125,7 @@ namespace Repository
                                                        ,GETDATE()
                                                     )";
 
-            profileId = int.Parse(ExeNonQuery(queryString));
+            profileId = ;
         }
 
         public void Update(UserProfile EntityData)
